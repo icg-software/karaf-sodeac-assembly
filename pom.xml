@@ -5,10 +5,11 @@
 
     <groupId>org.sodeac</groupId>
     <artifactId>org.sodeac.karaf.assembly</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <packaging>karaf-assembly</packaging>
 
     <name>Sodeac Distribution</name>
+    <description>Sodeac Distribution</description>
 
     <repositories>
         <!-- Apache ServiceMix repository (for region) -->
@@ -53,20 +54,20 @@
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>framework</artifactId>
-            <version>4.2.4</version>
+            <version>4.2.5</version>
             <type>kar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>standard</artifactId>
-            <version>4.2.4</version>
+            <version>4.2.5</version>
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>spring</artifactId>
-            <version>4.2.4</version>
+            <version>4.2.5</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
@@ -74,7 +75,7 @@
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>enterprise</artifactId>
-            <version>4.2.4</version>
+            <version>4.2.5</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
@@ -82,7 +83,7 @@
         <dependency>
             <groupId>org.sodeac</groupId>
             <artifactId>org.sodeac.karaf.feature</artifactId>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
@@ -111,12 +112,38 @@
                 <plugin>
                     <groupId>org.apache.karaf.tooling</groupId>
                     <artifactId>karaf-maven-plugin</artifactId>
-                    <version>4.2.4</version>
+                    <version>4.2.5</version>
                     <extensions>true</extensions>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
+          <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-source-plugin</artifactId>
+		    <version>3.0.1</version>
+		    <executions>
+		      <execution>
+		        <id>attach-sources</id>
+		        <goals>
+		          <goal>jar-no-fork</goal>
+		        </goals>
+		      </execution>
+		    </executions>
+	      </plugin>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-javadoc-plugin</artifactId>
+	        <version>3.0.0</version>
+	        <executions>
+		        <execution>
+		          <id>attach-javadocs</id>
+		          <goals>
+		            <goal>jar</goal>
+		          </goals>
+		        </execution>
+		     </executions>
+	      </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -150,6 +177,50 @@
             </plugin>
         </plugins>
     </build>
+    
+  <profiles>
+	<profile>
+		<id>release-sign-deploy-artifacts</id>
+		<activation>
+			<property>
+				<name>performRelease</name>
+				<value>true</value>
+			</property>
+		</activation>
+		<distributionManagement>
+			<snapshotRepository>
+				<id>ossrh</id>
+				<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			</snapshotRepository>
+			<repository>
+				<id>ossrh</id>
+				<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			</repository>
+		</distributionManagement>
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+							<configuration>
+								<keyname>${gpg.keyname}</keyname>
+								<passphraseServerId>${gpg.keyname}</passphraseServerId>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+  </profiles>
 
   <licenses>
 	<license>
