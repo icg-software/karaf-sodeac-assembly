@@ -5,69 +5,34 @@
 
     <groupId>org.sodeac</groupId>
     <artifactId>org.sodeac.karaf.assembly</artifactId>
-    <version>0.4.0</version>
+    <version>0.5.0</version>
     <packaging>karaf-assembly</packaging>
 
     <name>Sodeac Distribution</name>
     <description>Sodeac Distribution</description>
-
-    <repositories>
-        <!-- Apache ServiceMix repository (for region) -->
-        <repository>
-            <id>apache.servicemix.m2</id>
-            <name>Apache ServiceMix M2 repository</name>
-            <url>http://svn.apache.org/repos/asf/servicemix/m2-repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <!-- OPS4J SNAPSHOT repository -->
-        <repository>
-            <id>ops4j.sonatype.snapshots.deploy</id>
-            <name>OPS4J snapshot repository</name>
-            <url>https://oss.sonatype.org/content/repositories/ops4j-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <!-- Apache SNAPSHOT -->
-        <repository>
-            <id>apache.snapshots.deploy</id>
-            <name>Apache snapshot repository</name>
-            <url>https://repository.apache.org/content/groups/snapshots-group</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    
+    <properties>
+      <karaf.version>4.2.7</karaf.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>framework</artifactId>
-            <version>4.2.6</version>
+            <version>${karaf.version}</version>
             <type>kar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>standard</artifactId>
-            <version>4.2.6</version>
+            <version>${karaf.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>spring</artifactId>
-            <version>4.2.6</version>
+            <version>${karaf.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
@@ -75,7 +40,7 @@
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>enterprise</artifactId>
-            <version>4.2.6</version>
+            <version>${karaf.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
@@ -83,7 +48,7 @@
         <dependency>
             <groupId>org.sodeac</groupId>
             <artifactId>org.sodeac.karaf.feature</artifactId>
-            <version>0.4.0</version>
+            <version>0.5.0</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
@@ -107,16 +72,6 @@
                 </includes>
             </resource>
         </resources>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.karaf.tooling</groupId>
-                    <artifactId>karaf-maven-plugin</artifactId>
-                    <version>4.2.6</version>
-                    <extensions>true</extensions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
           <plugin>
 		    <groupId>org.apache.maven.plugins</groupId>
@@ -160,19 +115,19 @@
             <plugin>
                 <groupId>org.apache.karaf.tooling</groupId>
                 <artifactId>karaf-maven-plugin</artifactId>
+                <version>${karaf.version}</version>
+                <extensions>true</extensions>
                 <configuration>
-                	<!-- <startupFeatures/> -->
                     <bootFeatures>
                     	<bootFeature>standard</bootFeature>
+                    	<bootFeature>sodeac-distribution</bootFeature>
                     </bootFeatures>
                     <startupFeatures>
                     	<startupFeature>eventadmin</startupFeature>
-                    	<startupFeature>sodeac-distribution</startupFeature>
                     </startupFeatures>
                     <installedFeatures>
-                        
-                    </installedFeatures>                    
-                    <javase>1.8</javase>
+                    </installedFeatures> 
+                    <javase>11</javase>
                 </configuration>
             </plugin>
         </plugins>
