@@ -5,14 +5,14 @@
 
     <groupId>org.sodeac</groupId>
     <artifactId>org.sodeac.karaf.assembly</artifactId>
-    <version>0.5.5</version>
+    <version>0.6.0</version>
     <packaging>karaf-assembly</packaging>
 
     <name>Sodeac Distribution</name>
     <description>Sodeac Distribution</description>
     
     <properties>
-      <karaf.version>4.2.7</karaf.version>
+      <karaf.version>4.2.8</karaf.version>
     </properties>
 
     <dependencies>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.sodeac</groupId>
             <artifactId>org.sodeac.karaf.feature</artifactId>
-            <version>0.5.5</version>
+            <version>0.6.0</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
