@@ -5,7 +5,7 @@
 
     <groupId>org.sodeac</groupId>
     <artifactId>org.sodeac.karaf.assembly</artifactId>
-    <version>0.6.3</version>
+    <version>0.6.4</version>
     <packaging>karaf-assembly</packaging>
 
     <name>Sodeac Distribution</name>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.sodeac</groupId>
             <artifactId>org.sodeac.karaf.feature</artifactId>
-            <version>0.6.3</version>
+            <version>0.6.4</version>
             <classifier>features</classifier>
             <type>xml</type>
             <scope>runtime</scope>
@@ -120,12 +120,14 @@
                 <configuration>
                     <bootFeatures>
                     	<bootFeature>standard</bootFeature>
-                    	<bootFeature>sodeac-distribution</bootFeature>
+                    	<bootFeature>sodeac-standalone</bootFeature>
                     </bootFeatures>
                     <startupFeatures>
                     	<startupFeature>eventadmin</startupFeature>
                     </startupFeatures>
                     <installedFeatures>
+                    	<installedFeature>sodeac-master</installedFeature>
+                    	<installedFeature>sodeac-worker</installedFeature>
                     </installedFeatures> 
                     <javase>11</javase>
                 </configuration>
